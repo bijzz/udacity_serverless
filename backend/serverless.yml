@@ -42,7 +42,11 @@ functions:
         Action:
           - dynamodb:Query
         Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.TODO_TABLE}/index/${self:provider.environment.TODO_TABLE_IDX_NAME}
-        
+      - Effect: Allow
+        Action:
+          - s3:GetObject
+        Resource: arn:aws:s3:::${self:provider.environment.ATTACHMENT_S3_BUCKET}/*
+
   CreateTodo:
     handler: src/lambda/http/createTodo.handler
     events:
@@ -163,9 +167,11 @@ resources:
             Id: MyPolicy
             Version: "2012-10-17"
             Statement:
-              - Sid: PublicReadBucketPolicy
+              - Sid: PublicReadWriteBucketPolicy
                 Effect: Allow
                 Principal: '*'
-                Action: 's3:GetObject'
+                Action:
+                  - s3:GetObject
+                  - s3:PutObject
                 Resource: 'arn:aws:s3:::${self:provider.environment.ATTACHMENT_S3_BUCKET}/*'
           Bucket: !Ref AttachmentBucket

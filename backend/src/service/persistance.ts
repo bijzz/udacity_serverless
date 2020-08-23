@@ -3,9 +3,8 @@ const docClient = new AWS.DynamoDB.DocumentClient()
 import { TodoItem  } from '../models/TodoItem'
 import { UpdateTodoRequest  } from '../requests/UpdateTodoRequest'
 const s3 = new AWS.S3({
-    signatureVersion: 'v4'
-  })
-
+  signatureVersion: 'v4'
+})
     
 export async function persistTodo(newToDoItem: TodoItem) {
     return await docClient.put({
@@ -57,17 +56,16 @@ export async function updateTodo(todoId: string, updatedTodo:UpdateTodoRequest) 
 
 
 
-
-export function getUploadUrl(todoId: string) {
+export function getUploadUrl(todoId: string) : string {
     return s3.getSignedUrl('putObject', {
       Bucket: process.env.ATTACHMENT_S3_BUCKET,
       Key: todoId,
-      Expires: process.env.SIGNED_URL_EXPIRATION
+      Expires: parseInt(process.env.SIGNED_URL_EXPIRATION)
     })
   }
 
   export async function updateUploadUrl(todoId: string) {
-      await docClient.update(  {
+      return await docClient.update(  {
         TableName: process.env.TODO_TABLE,
         Key: {'todoId' : todoId},
         UpdateExpression : 'set attachmentUrl = :attachment_url',
