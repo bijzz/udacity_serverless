@@ -147,7 +147,7 @@ resources:
         BucketName: ${self:provider.environment.ATTACHMENT_S3_BUCKET}
         CorsConfiguration:
           CorsRules:
-            -
+            - 
               AllowedOrigins:
                 - '*'
               AllowedHeaders:
