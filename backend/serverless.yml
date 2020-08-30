@@ -55,6 +55,9 @@ functions:
           path: todos
           cors: true
           authorizer: Auth
+          request:
+            schema:
+              application/json: ${file(src/lambda/validator/createTodo.json)}
     iamRoleStatements:
       - Effect: Allow
         Action:
@@ -70,6 +73,8 @@ functions:
           path: todos/{todoId}
           cors: true
           authorizer: Auth
+          schema:
+            application/json: ${file(src/lambda/validator/updateTodo.json)}
     iamRoleStatements:
       - Effect: Allow
         Action:
