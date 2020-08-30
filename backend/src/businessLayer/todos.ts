@@ -1,4 +1,3 @@
-import * as AWS  from 'aws-sdk'
 import { TodoItem  } from '../models/TodoItem'
 import { UpdateTodoRequest } from '../requests/UpdateTodoRequest'
 import { CreateTodoRequest } from '../requests/CreateTodoRequest'
