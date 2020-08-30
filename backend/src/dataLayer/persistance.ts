@@ -13,7 +13,7 @@ export async function persistTodo(newToDoItem: TodoItem) {
     }).promise()
 }
 
-export async function deleteTodo(todoId: string) {
+export async function removeTodo(todoId: string) {
     return await docClient.delete({
         TableName: process.env.TODO_TABLE,
         Key: {
@@ -35,7 +35,7 @@ export async function getTodo(userId: string) {
     }).promise()
 }
 
-export async function updateTodo(todoId: string, updatedTodo:UpdateTodoRequest) {
+export async function updateTodoItem(todoId: string, updatedTodo:UpdateTodoRequest) {
     return await docClient.update(  {
         TableName: process.env.TODO_TABLE,
         Key: {'todoId' : todoId},

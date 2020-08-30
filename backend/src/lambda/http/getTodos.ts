@@ -1,8 +1,9 @@
 import 'source-map-support/register'
 import { APIGatewayProxyEvent, APIGatewayProxyResult, APIGatewayProxyHandler } from 'aws-lambda'
-import { getUserId } from '../../auth/utils'
+
 import { createLogger } from '../../utils/logger'
-import { getTodo } from '../../service/persistance'
+import { getTodo } from '../../dataLayer/persistance'
+import { getAllTodos } from '../../businessLayer/todos'
 const logger = createLogger('getTodo')
 
 
@@ -14,11 +15,7 @@ export const handler: APIGatewayProxyHandler = async (event: APIGatewayProxyEven
   const split = authorization.split(' ')
   const jwtToken = split[1]
 
-  let userId: string =  getUserId(jwtToken)
-  
-  const result = await getTodo(userId)
-
-  logger.info("Fetched Todos", {userId: userId})
+  const result = await getAllTodos(jwtToken)
 
   return {
     statusCode: 200,

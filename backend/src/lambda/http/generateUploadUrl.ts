@@ -1,19 +1,14 @@
 import 'source-map-support/register'
 import { APIGatewayProxyEvent, APIGatewayProxyResult, APIGatewayProxyHandler } from 'aws-lambda'
 import { createLogger } from '../../utils/logger'
-import {  getUploadUrl, updateUploadUrl } from '../../service/persistance'
+import { produceUploadUrl } from '../../businessLayer/todos'
 const logger = createLogger('uploadUrl')
 
 
 export const handler: APIGatewayProxyHandler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
   const todoId = event.pathParameters.todoId
 
-  const url : string = getUploadUrl(todoId)
-
-  logger.info("Presigned URL fetched",{presignedUrl: url})
-
-  await updateUploadUrl(todoId)
-
+  const url = await produceUploadUrl(todoId)
   
   return {
     statusCode: 201,
