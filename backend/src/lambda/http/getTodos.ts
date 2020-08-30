@@ -1,10 +1,7 @@
 import 'source-map-support/register'
 import { APIGatewayProxyEvent, APIGatewayProxyResult, APIGatewayProxyHandler } from 'aws-lambda'
-
-import { createLogger } from '../../utils/logger'
-import { getTodo } from '../../dataLayer/persistance'
 import { getAllTodos } from '../../businessLayer/todos'
-const logger = createLogger('getTodo')
+
 
 
 export const handler: APIGatewayProxyHandler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {

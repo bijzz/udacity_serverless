@@ -1,11 +1,7 @@
 import * as AWS  from 'aws-sdk'
-const docClient = new AWS.DynamoDB.DocumentClient()
 import { TodoItem  } from '../models/TodoItem'
 import { UpdateTodoRequest } from '../requests/UpdateTodoRequest'
 import { CreateTodoRequest } from '../requests/CreateTodoRequest'
-const s3 = new AWS.S3({
-  signatureVersion: 'v4'
-})
 import { getUserId } from '../auth/utils'
 import * as uuid from 'uuid'
 import { createLogger } from '../utils/logger'
